@@ -32,7 +32,7 @@ async function run() {
         const reviewCollection = client.db("bistroDb").collection("reviews");
         const cartCollection = client.db("bistroDb").collection("carts");
 
-        // user api
+        // user post api
         app.post('/users', async (req, res) => {
             const user = req.body;
             const query = { email: user.email }
@@ -43,6 +43,13 @@ async function run() {
             const result = await usersCollection.insertOne(user);
             res.send(result);
         });
+
+        // user get api
+        app.get('/users', async (req, res) => {
+            const result = await usersCollection.find().toArray();
+            res.send(result);
+        })
+
 
         // menu get api
         app.get('/menu', async (req, res) => {
