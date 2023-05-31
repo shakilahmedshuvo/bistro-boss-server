@@ -48,20 +48,20 @@ async function run() {
         app.get('/users', async (req, res) => {
             const result = await usersCollection.find().toArray();
             res.send(result);
-        })
+        });
 
 
         // menu get api
         app.get('/menu', async (req, res) => {
             const result = await menuCollection.find().toArray();
             res.send(result);
-        })
+        });
 
         // reviews get api
         app.get('/reviews', async (req, res) => {
             const result = await reviewCollection.find().toArray();
             res.send(result);
-        })
+        });
 
         // cart get api
         app.get('/carts', async (req, res) => {
@@ -72,7 +72,7 @@ async function run() {
             const query = { email: email };
             const result = await cartCollection.find(query).toArray();
             res.send(result);
-        })
+        });
 
         // cart post api
         app.post('/carts', async (req, res) => {
@@ -80,7 +80,7 @@ async function run() {
             // console.log(item);
             const result = await cartCollection.insertOne(item);
             res.send(result);
-        })
+        });
 
         // cart delete api
         app.delete('/carts/:id', async (req, res) => {
@@ -88,7 +88,7 @@ async function run() {
             const query = { _id: new ObjectId(id) }
             const result = await cartCollection.deleteOne(query)
             res.send(result);
-        })
+        });
 
 
         // Send a ping to confirm a successful connection
