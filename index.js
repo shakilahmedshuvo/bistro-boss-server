@@ -72,6 +72,22 @@ async function run() {
             res.send(result);
         });
 
+        // admin check
+        app.get('/users/admin/:email', verifyJWT, async (req, res) => {
+            const email = req.params.email;
+
+            // check the admin email
+            // security layer: verifyJWT ( email same check admin )
+            if (req.decoded.email !== email) {
+                res.send({ admin: false })
+            }
+
+            const query = { email: email }
+            const user = await usersCollection.findOne(query);
+            const result = { admin: user?.role === 'admin' };
+            res.send(result);
+        })
+
         // make admin api
         app.patch('/users/admin/:id', async (req, res) => {
             const id = req.params.id;
@@ -84,7 +100,6 @@ async function run() {
             const result = await usersCollection.updateOne(filter, updateDoc);
             res.send(result);
         });
-
 
         // menu get api
         app.get('/menu', async (req, res) => {
@@ -105,6 +120,7 @@ async function run() {
                 res.send([]);
             }
 
+            // for jwt verify
             const decodedEmail = req.decoded.email;
             if (email !== decodedEmail) {
                 return res.status(403).send({ error: true, message: 'Forbidden Access' });
