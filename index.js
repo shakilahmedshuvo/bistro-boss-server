@@ -163,6 +163,13 @@ async function run() {
             res.send(result);
         });
 
+        // 
+        app.post('/menu', async (req, res) => {
+            const newItem = req.body;
+            const result = await menuCollection.insertOne(newItem)
+            res.send(result);
+        });
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
